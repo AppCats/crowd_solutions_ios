@@ -2,8 +2,6 @@
 
 This is the App Cats CrowdSOLUTIONS Framework.
     
-## Getting Started ##
-
 ## Installation
 
 CrowdSolutions is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
@@ -12,6 +10,11 @@ CrowdSolutions is available through [CocoaPods](http://cocoapods.org). To instal
 pod 'CrowdSolutions'
 ```
 
+## Support
+
+Any issues or questions can be sent to `dev{AT}appcats.com`
+
+## Getting Started ##
 
 ### Logging ###
 
