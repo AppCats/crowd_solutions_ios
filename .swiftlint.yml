@@ -1,0 +1,144 @@
+included: # paths to include during linting. `--path` is ignored if present.
+  - CrowdSOLUTIONS
+  - Tests
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Pods
+  - tools
+  - fastlane
+  - ci_scripts
+analyzer_rules:
+  - unused_declaration
+  - unused_import
+  - capture_variable
+disabled_rules: # rule identifiers to exclude from running
+  - cyclomatic_complexity
+  - empty_enum_arguments
+  - force_cast
+  - function_parameter_count
+  - function_body_length
+  - line_length
+  - nesting
+  - no_fallthrough_only
+  - notification_center_detachment
+  - shorthand_operator #allow a = a + 1
+  - syntactic_sugar
+  - todo
+  - trailing_whitespace
+  - type_name
+  - redundant_string_enum_value #allow String enum case == value
+  - unused_closure_parameter
+  - unused_optional_binding
+  - void_function_in_ternary
+opt_in_rules: # some rules are only opt-in
+  - attributes
+  - closure_end_indentation
+  - closure_spacing
+  - collection_alignment
+  - colon
+  - comma
+#  - convenience_type # good to enable for some checks
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - contains_over_first_not_nil
+  - contains_over_range_nil_comparison
+  - control_statement
+  - discouraged_object_literal
+  - explicit_init
+  - fatal_error_message
+  - file_name_no_space
+  - first_where
+  - identical_operands
+  - legacy_random
+  - mark
+  - missing_docs
+  - multiline_arguments
+  #- operator_usage_whitespace # good optional check
+  - switch_case_on_newline
+  - toggle_bool
+  - trailing_newline
+  - last_where
+  - legacy_multiple
+  - lower_acl_than_parent
+  # - prefer_self_in_static_references
+  - period_spacing
+  - prefer_zero_over_explicit_init
+  - private_action
+  - redundant_optional_initialization
+  - single_test_class
+  - unneeded_parentheses_in_closure_argument
+  - untyped_error_in_catch
+  - vertical_parameter_alignment_on_call
+  - yoda_condition
+
+#https://realm.github.io/SwiftLint/rule-directory.html
+
+# configurable rules can be customized from this configuration file
+# binary rules can set their severity level
+# force_cast: warning # implicitly. Give warning only for force casting
+  
+force_try:
+  severity: warning # explicitly. Give warning only for force try
+
+type_body_length:
+  - 800 # warning
+  - 1000 # error
+
+# or they can set both explicitly
+file_length:
+  warning: 2500
+  error: 2800
+
+large_tuple: # warn user when using 3 values in tuple, give error if there are 4
+   - 3
+   - 4
+   
+file_name_no_space:
+  severity: error
+
+attributes:
+  always_on_same_line: ["@IBAction", "@IBDesignable", "@NSManaged", "@objc"]
+  always_on_line_above: ["@discardableResult", "@WidgetBundleBuilder", "@Environment", "@Published", "@PublishedValue", "@RewardCurrencyDisplayWrapper"]
+
+multiline_arguments:
+  only_enforce_after_first_closure_on_first_line: true
+
+inclusive_language:
+  override_allowed_terms:
+    - ticketmaster
+
+identifier_name:
+  excluded: [r, g, b, a, h, s, v, x, y, z, t, dx, dy, dz]
+  allowed_symbols: ["_"]
+  min_length:
+    error: 1
+    warning: 2
+  max_length:
+    warning: 60
+    error: 80
+
+reporter: "xcode"
+
+#
+# Custom rules
+#
+custom_rules:
+# SwiftLint includes \n in the (.*), so use ([^\n]*) instead of (.*)
+# Original regex for Xcode: ^(\h*+).*weakSink\(target\: self\)((.*\n(?!(\1\})))*?)(.*[^weak]self)
+#
+# Explanation (using regular .* for clarity)
+# ^(\h*+) - Capture whitespace at the start of the line. This is used to determine the end of the weakSink closure.
+#         - This requires the code to be properly indented.
+# .* - Capture any number of characters after the whitespace, but before the weakSink.
+# weakSink\(target\: self\) - Identify the method name.
+# ((.*\n(?!(\1\})))*?) - Iterates over lines matching all characters until it finds "\1\}" which is the number of whitespace in the first capture group followed by "}".
+# (.*[^weak]self) - Matches occurrences of self that are not weakSelf (do not have the prefix "weak"). Xcode regex are case insensitive as well.
+  strong_self_inside_weaksink:
+    included: ".*\\.swift"
+    regex: '^(\h*+)([^\n]*)weakSink\(target\: self\)((([^\n]*)\n(?!(\1\})))*?)(([^\n]*)[^weak]self)'
+    message: "Use of strong self inside weakSink"
+    severity: error
+  nested_self_usage:
+    name: "Nested .self usage"
+    message: ".self shouldn't be used more than once on a given statement"
+    regex: "(?<!\")self\\.(?:\\p{L}+\\.)*self"
+    severity: warning
