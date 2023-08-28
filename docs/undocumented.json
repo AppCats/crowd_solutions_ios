@@ -2,7 +2,7 @@
   "warnings": [
     {
       "file": "/Users/kevin/Developer/Bleachr/ios-crowdsolutions/Sources/CrowdChat/CrowdChatRoomChannel.swift",
-      "line": 76,
+      "line": 80,
       "symbol": "CrowdChatRoomChannel.init(server:token:subject:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

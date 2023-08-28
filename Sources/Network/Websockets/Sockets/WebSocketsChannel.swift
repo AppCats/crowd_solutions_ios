@@ -66,8 +66,6 @@ public class WebSocketsChannel {
         }
     }
 
-    // MARK: - Raw events
-
     func received(_ response: WebSocketsResponse) {
         if let callback = callbacks[response.event] {
             callback(response)

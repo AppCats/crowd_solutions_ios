@@ -49,11 +49,13 @@ public final class WebSocket {
         static let error        = "phx_error"
         static let close        = "phx_close"
     }
+    
+    /// Default Socket Name
+    static let socketDefaultName = "CrowdSOLUTIONS Socket"
 
     private static let HeartbeatInterval = DispatchTimeInterval.seconds(5)
     private static let HeartbeatPrefix = "hb-"
     private static let HeatbeatChannelTopic = "phoenix"
-    static let socketDefaultName = "CrowdSOLUTIONS Socket"
 
     private var heartbeatQueue: DispatchQueue = DispatchQueue(label: "co.appcats.websocket.hbqueue")
     private var awaitingResponses = [String: WebSocketsPush]()

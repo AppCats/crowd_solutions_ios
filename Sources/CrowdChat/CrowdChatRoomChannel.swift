@@ -41,6 +41,8 @@ public final class CrowdChatRoomChannel {
     
     private var isLoadingHistory = false
 
+    private var _newEventReceived = PassthroughSubject<CrowdChatResponseEvent, Never>()
+
     /// The number of users in channel
     @Published
     private(set) public var channelUserCount: Int = 0
@@ -64,9 +66,11 @@ public final class CrowdChatRoomChannel {
     /// Your Chat Room User
     private(set) public var user: CrowdChatRoomUser?
     
-    /// New Server Event Received
-    private(set) public var newEventReceived = PassthroughSubject<CrowdChatResponseEvent, Never>()
-    
+    /// New Chat Event Received
+    public lazy var newEventReceived: AnyPublisher<CrowdChatResponseEvent, Never> = {
+       self._newEventReceived.eraseToAnyPublisher()
+    }()
+
     /// Round Trip Time to Chat Server
     ///
     /// This is the value of the most recent message
@@ -112,7 +116,7 @@ public extension CrowdChatRoomChannel {
 
                 onConnected?()
 
-                self.newEventReceived.send(.channelJoin(user: roomInfo.user))
+                self._newEventReceived.send(.channelJoin(user: roomInfo.user))
             }
             
             // seed the list of Blocked Users
@@ -171,7 +175,7 @@ public extension CrowdChatRoomChannel {
             
             self.updateChatMessages(messages: history.messages)
             self.updateFlaggedMessages(messages: history.messages)
-            self.newEventReceived.send(.messageHistory(count: history.messages.count))
+            self._newEventReceived.send(.messageHistory(count: history.messages.count))
         }
     }
 
@@ -296,7 +300,7 @@ private extension CrowdChatRoomChannel {
                     self.flaggedUsers.update(with: $0)
                 }
                 
-                self.newEventReceived.send(.flaggedUsers)
+                self._newEventReceived.send(.flaggedUsers)
 
             case .failure(let error):
                 CrowdLog.error(error.localizedDescription, subsystem: .chat)
@@ -324,7 +328,7 @@ private extension CrowdChatRoomChannel {
                     self.blockedUsers.update(with: $0)
                 }
                 
-                self.newEventReceived.send(.blockedUsers)
+                self._newEventReceived.send(.blockedUsers)
 
             case .failure(let error):
                 CrowdLog.error(error.localizedDescription, subsystem: .chat)
@@ -508,7 +512,7 @@ private extension CrowdChatRoomChannel {
 
             if let action = CrowdChatCommandNewMessageResponse(event: response.event, payload: response.payload) {
                 self.updateChatMessages(messages: [action.message])
-                self.newEventReceived.send(.newMessage)
+                self._newEventReceived.send(.newMessage)
             }
         })
 
@@ -520,7 +524,7 @@ private extension CrowdChatRoomChannel {
                 self.messages.remove(at: index)
                 // Add it back as it says "Message Removed"
                 self.updateChatMessages(messages: [action.message])
-                self.newEventReceived.send(.messageRemoved)
+                self._newEventReceived.send(.messageRemoved)
             }
         })
         
@@ -532,7 +536,7 @@ private extension CrowdChatRoomChannel {
                 self.messages.remove(at: index)
                 // Add it back as it has changed the hidden
                 self.updateChatMessages(messages: [action.message])
-                self.newEventReceived.send(.messageHidden)
+                self._newEventReceived.send(.messageHidden)
             }
         })
 
@@ -548,7 +552,7 @@ private extension CrowdChatRoomChannel {
                     }
                 }
 
-                self.newEventReceived.send(.userBlocked)
+                self._newEventReceived.send(.userBlocked)
             }
         })
 
@@ -564,7 +568,7 @@ private extension CrowdChatRoomChannel {
                     }
                 }
 
-                self.newEventReceived.send(.userUnblocked)
+                self._newEventReceived.send(.userUnblocked)
             }
         })
         
@@ -572,14 +576,14 @@ private extension CrowdChatRoomChannel {
             guard let self else { return }
             
             // No need to decode payload as we only care about the event
-            self.newEventReceived.send(.chatRoomArchived)
+            self._newEventReceived.send(.chatRoomArchived)
         })
         
         self.socket?.channel?.on(CrowdChatCommandUnarchiveResponse.event, callback: { [weak self] _ in
             guard let self else { return }
             
             // No need to decode payload as we only care about the event
-            self.newEventReceived.send(.chatRoomUnarchived)
+            self._newEventReceived.send(.chatRoomUnarchived)
         })
     }
     
@@ -597,13 +601,13 @@ private extension CrowdChatRoomChannel {
                 guard let message = action.content as? CrowdChatMessage else { return }
 
                 self.updateFlaggedMessages(messages: [message])
-                self.newEventReceived.send(.unflaggedContent(type: .message))
+                self._newEventReceived.send(.unflaggedContent(type: .message))
 
             case .user:
                 guard let user = action.content as? CrowdChatRoomUser else { return }
 
                 self.updateFlaggedUsers(users: [user])
-                self.newEventReceived.send(.unflaggedContent(type: .user))
+                self._newEventReceived.send(.unflaggedContent(type: .user))
             }
         }
     }
@@ -619,13 +623,13 @@ private extension CrowdChatRoomChannel {
                     guard let message = action.content as? CrowdChatMessage else { return }
 
                     self.updateFlaggedMessages(messages: [message])
-                    self.newEventReceived.send(.flaggedContent(type: .message))
+                    self._newEventReceived.send(.flaggedContent(type: .message))
                     
                 case .user:
                     guard let user = action.content as? CrowdChatRoomUser else { return }
 
                     self.updateFlaggedUsers(users: [user])
-                    self.newEventReceived.send(.flaggedContent(type: .user))
+                    self._newEventReceived.send(.flaggedContent(type: .user))
                 }
             }
         })
