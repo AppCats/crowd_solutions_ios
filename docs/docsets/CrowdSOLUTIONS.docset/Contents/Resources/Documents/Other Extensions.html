@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>CrowdSOLUTIONS  Reference</title>
+    <title>Other Extensions  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset="utf-8">
@@ -14,8 +14,9 @@
   </head>
   <body>
 
+    <a name="//apple_ref/swift/Section/Other Extensions" class="dashAnchor"></a>
 
-    <a title="CrowdSOLUTIONS  Reference"></a>
+    <a title="Other Extensions  Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -43,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="index.html">CrowdSOLUTIONS Reference</a>
       <img class="carat" src="img/carat.png" alt=""/>
-      CrowdSOLUTIONS  Reference
+      Other Extensions  Reference
     </p>
 
     <div class="content-wrapper">
@@ -83,45 +84,46 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            
-            <h1 id='readme' class='heading'>README</h1>
-
-<p>This is the App Cats CrowdSOLUTIONS Framework.</p>
-<h2 id='installation' class='heading'>Installation</h2>
-
-<p>CrowdSolutions is available through <a href="http://cocoapods.org">CocoaPods</a>. To install it, simply add the following line to your Podfile:</p>
-<pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'CrowdSolutions'</span>
-</code></pre>
-<h2 id='support' class='heading'>Support</h2>
-
-<p>Any issues or questions can be sent to <code>dev{AT}appcats.com</code></p>
-<h2 id='getting-started' class='heading'>Getting Started</h2>
-<h3 id='logging' class='heading'>Logging</h3>
-
-<p>We provide a Logger that can post to the console or a publisher which you can then use inside of your application either by posting to the console or using some other tool such as Swifty Beaver to log</p>
-<pre class="highlight plaintext"><code>CrowdLog.shared.logLocation = .publisher
-CrowdLog.shared.allowedSubsystems = .all
-CrowdLog.shared.logReceived
-    .onMain
-    .sink { log in
-
-        switch log.level {
-        case .debug:
-            DDLogD(log.message, log.function, line: log.line)
-        case .info:
-            DDLogI(log.message, log.function, line: log.line)
-        case .notice:
-            DDLogW(log.message, log.function, line: log.line)
-        case .error, .fault:
-            DDLogE(log.message, log.function, line: log.line)
-        }
-    }
-    .store(in: &amp;cancellables)
-</code></pre>
+            <h1>Other Extensions</h1>
+            <p>The following extensions are available globally.</p>
 
           </div>
         </section>
 
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SS"></a>
+                    <a name="//apple_ref/swift/Extension/String" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SS">String</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">String</span><span class="p">:</span> <span class="kt">Error</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
 
       </article>
     </div>

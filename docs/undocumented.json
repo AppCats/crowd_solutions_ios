@@ -1,52 +1,10 @@
 {
   "warnings": [
     {
-      "file": "/Users/kevin/Developer/Bleachr/ios-crowdsolutions/Sources/CrowdChat/CrowdChatRoomChannel.swift",
-      "line": 80,
-      "symbol": "CrowdChatRoomChannel.init(server:token:subject:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/kevin/Developer/Bleachr/ios-crowdsolutions/Sources/CrowdChat/Models/CrowdChatSubject.swift",
-      "line": 40,
-      "symbol": "CrowdChatSubject.init(identifier:name:type:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/kevin/Developer/Bleachr/ios-crowdsolutions/Sources/CrowdChat/Models/CrowdChatTip.swift",
-      "line": 35,
-      "symbol": "CrowdChatTip.init(amount:notes:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/kevin/Developer/Bleachr/ios-crowdsolutions/Sources/CrowdChat/Models/Messages/Message Type/CrowdChatMessageTypeLimit.swift",
-      "line": 37,
-      "symbol": "CrowdChatMessageTypeLimit.init(type:limit:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/kevin/Developer/Bleachr/ios-crowdsolutions/Sources/Logs/CrowdLog.swift",
+      "file": "/Users/kevin/Developer/Bleachr/ios-crowdsolutions/Sources/Core/Logs/CrowdLog.swift",
       "line": 29,
       "symbol": "CrowdLog",
       "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/kevin/Developer/Bleachr/ios-crowdsolutions/Sources/Network/Websockets/WebSocketProvider/AppleWebSocketProvider.swift",
-      "line": 114,
-      "symbol": "AppleWebSocketProvider.urlSession(_:webSocketTask:didOpenWithProtocol:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/kevin/Developer/Bleachr/ios-crowdsolutions/Sources/Network/Websockets/WebSocketProvider/WebSocketProvider.swift",
-      "line": 49,
-      "symbol": "WebSocketProviderError",
-      "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     }
   ],
